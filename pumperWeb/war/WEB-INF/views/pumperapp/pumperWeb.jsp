@@ -19,6 +19,16 @@
             <td><i>{{=Birthday}}</i> </td>
         </tr>
 </script>
+
+<script id="stopDetailsTemplate" type="text/html">
+        <tr>
+            <td>{{=id}}</td> 
+            <td><b>{{=name}}</b></td> 
+            <td><i>{{=description}}</i> </td>
+			<td><i>{{=latitude}}</i> </td>
+			<td><i>{{=lontitude}}</i> </td>
+        </tr>
+</script>
 </head>
 <body>
 Hello, <%= request.getAttribute("name") %>!
@@ -50,7 +60,7 @@ Hello, <%= request.getAttribute("name") %>!
     <input id="addStopDetails" name="addStopDetails" type="button" value="Add Stop"/>
 </form>
 <div name="stopDetailsList">
-	<table>
+	<table id="stopDetailsTbl">
 		<tr>
 			<th>Stop Name</th>
 			<th>Stop Desc</th>
@@ -68,7 +78,8 @@ Hello, <%= request.getAttribute("name") %>!
 
 <div id="GolferDiv"></div><br />
 <table id="GolferTable"></table>
-    
+
+
 <script>
 
 function renderTable() {
@@ -92,14 +103,8 @@ function test() {
 	    		 
 	    		
 	    		}),
-	    success: function() {
-	      $('#contact_form').html("<div id='message'></div>");
-	      $('#message').html("<h2>Contact Form Submitted!</h2>")
-	      .append("<p>We will be in touch soon.</p>")
-	      .hide()
-	      .fadeIn(1500, function() {
-	        $('#message').append("<img id='checkmark' src='images/check.png' />");
-	      });
+	    success: function(stopDetails) {
+	    	$("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
 	    }
 	  });
 	
@@ -110,8 +115,10 @@ function test() {
 	               { ID: "3", "Name": "Tiger Woods", "Birthday": "1975-12-30" }
 	               ];
 	
+	var stopDetails = {"name":"dada","description":"eqeq","id":3131441,"details":"dsdadada","lontitude":"eqeq","latitude":"eqq"};
 	$("#GolferDiv").html($("#GolferTemplate1").render(Golfers));
-    $("#GolferTable").html($("#GolferTemplate2").render(Golfers))
+    $("#GolferTable").html($("#GolferTemplate2").render(Golfers));
+    $("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
 	
 }
 $(document).ready(function(){
