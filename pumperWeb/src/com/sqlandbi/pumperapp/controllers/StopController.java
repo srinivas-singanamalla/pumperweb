@@ -1,6 +1,7 @@
 package com.sqlandbi.pumperapp.controllers;
 
 import java.io.IOException;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
@@ -59,6 +60,16 @@ public class StopController {
 //		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("application/json");
 	    StopDetails details = stopDAO.addStopDetails(stopDetails);
+	    return details;
+	}
+	
+	@RequestMapping(value="/pumperapp/getStopDetails", method=RequestMethod.GET)
+	public @ResponseBody Collection<StopDetails> getStopDetails(HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		//ObjectMapper mapper = new ObjectMapper();
+		//StopDetails user = mapper.readValue(account, StopDetails.class);
+//		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+		response.setContentType("application/json");
+	    Collection<StopDetails> details = stopDAO.getStopDetailsList();
 	    return details;
 	}
 

@@ -6,3 +6,4 @@
 *.ear
 pumperWeb/war/sample.log
 pumperWeb/war/WEB-INF/appengine-generated/local_db.bin
+pumperWeb/war/WEB-INF/appengine-generated/

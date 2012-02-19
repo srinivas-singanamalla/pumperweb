@@ -83,7 +83,15 @@ Hello, <%= request.getAttribute("name") %>!
 <script>
 
 function renderTable() {
-	
+	$.ajax({
+	    type: "GET",
+	    url: "getStopDetails.do",
+	    //contentType: 'application/json', 	
+	   
+	    success: function(stopDetails) {
+	    	$("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
+	    }
+	  });
 }
 
 function test() {
@@ -122,6 +130,7 @@ function test() {
 	
 }
 $(document).ready(function(){
+	renderTable();
 	$('#addStopDetails').click(test);		
 });
   
