@@ -79,15 +79,11 @@ function test() {
 	
 	$.ajax({
 	    type: "POST",
-	    dataType: 'json',
 	    url: "create.do",
-	    /* headers : {
-	    	'Content-Type' : 'application/json'
-	    	},
-	    contentType: 'application/json',  */	
-	    data: {'account' : JSON.stringify({
+	    contentType: 'application/json', 	
+	    data: JSON.stringify({
 	    	  
-	    		  'name': $("input#stopName").val(),
+	    		    'name': $("input#stopName").val(),
 		    		'id' : $("input#stopId").val(),
 		    		'description' : $("input#stopDesc").val(),
 		    		'details': "dsdadada",
@@ -95,7 +91,7 @@ function test() {
 		    		'lontitude' : $("input#stopLongitude").val()  
 	    		 
 	    		
-	    		})},
+	    		}),
 	    success: function() {
 	      $('#contact_form').html("<div id='message'></div>");
 	      $('#message').html("<h2>Contact Form Submitted!</h2>")

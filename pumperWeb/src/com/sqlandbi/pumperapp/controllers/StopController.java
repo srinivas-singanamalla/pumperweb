@@ -53,12 +53,12 @@ public class StopController {
 	}*/
 	
 	@RequestMapping(value="/pumperapp/create", method=RequestMethod.POST)
-	public @ResponseBody StopDetails create(@RequestParam String account, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
-		ObjectMapper mapper = new ObjectMapper();
-		StopDetails user = mapper.readValue(account, StopDetails.class);
+	public @ResponseBody StopDetails create(@RequestBody  StopDetails stopDetails, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+		//ObjectMapper mapper = new ObjectMapper();
+		//StopDetails user = mapper.readValue(account, StopDetails.class);
 //		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("application/json");
-	    StopDetails details = stopDAO.addStopDetails(user);
+	    StopDetails details = stopDAO.addStopDetails(stopDetails);
 	    return details;
 	}
 
