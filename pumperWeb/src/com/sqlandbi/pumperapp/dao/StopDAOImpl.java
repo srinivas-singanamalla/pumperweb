@@ -1,11 +1,13 @@
 package com.sqlandbi.pumperapp.dao;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.jdo.PersistenceManager;
 
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 
 import com.google.appengine.api.datastore.Query;
 import com.sqlandbi.pumperapp.dao.StopDAO;
@@ -62,6 +64,9 @@ public class StopDAOImpl implements StopDAO {
 		javax.jdo.Query query = pm.newQuery(StopDetails.class);
 		Collection<StopDetails> results = (Collection<StopDetails>) query.execute();
 		Collection<StopDetails> list = pm.detachCopyAll(results);
+		if (CollectionUtils.isEmpty(list)) {
+			return Collections.emptyList();
+		}
 		return list;
 	}
 

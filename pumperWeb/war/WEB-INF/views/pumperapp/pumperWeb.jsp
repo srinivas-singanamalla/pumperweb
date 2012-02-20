@@ -7,18 +7,7 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery-1.7.1.js"></script>
 <script type="text/javascript" src="../js/jsrender.js"></script>
-
-<script id="GolferTemplate1" type="text/html">
-        {{=ID}}: <b>{{=Name}}</b> <i>{{=Birthday}}</i> <br />
-</script>
-
-<script id="GolferTemplate2" type="text/html">
-        <tr>
-            <td>{{=ID}}</td> 
-            <td><b>{{=Name}}</b></td> 
-            <td><i>{{=Birthday}}</i> </td>
-        </tr>
-</script>
+<link rel="stylesheet" type="text/css" href="../style/main.css" media="screen" />
 
 <script id="stopDetailsTemplate" type="text/html">
         <tr>
@@ -31,11 +20,14 @@
 </script>
 </head>
 <body>
-Hello, <%= request.getAttribute("name") %>!
 
-<form>
+<div id="stylized" class="myform">
+<form id="addStopForm" name="form">
+<h1>Add a Stop form</h1>
+<p>Information for a Stop</p>
+
     <fieldset>
-        <legend>Stop Management</legend>
+        <legend>Add a Stop </legend>
         <div>
             <label for="name">Stop Name</label>
             <input type="text" id="stopName" name="stopName">
@@ -58,38 +50,38 @@ Hello, <%= request.getAttribute("name") %>!
         </div>
     </fieldset>
     <input id="addStopDetails" name="addStopDetails" type="button" value="Add Stop"/>
+    <div class="spacer"></div>
 </form>
+</div>
 <div name="stopDetailsList">
 	<table id="stopDetailsTbl">
 		<tr>
+			<th>Stop Id</th>
 			<th>Stop Name</th>
 			<th>Stop Desc</th>
 			<th>Stop Latitude</th>
 			<th>Stop Longitude</th>
 		</tr>
-		<tr>
-			<td>Stop A</td>
-			<td>Stop Desc</td>
-			<td>23 56 99</td>
-			<td>89 77 09</td>
-		</tr>
 	</table>
+	<div id="noStopDetails">
+		No data available for Stops
+	</div>
 </div>
 
-<div id="GolferDiv"></div><br />
-<table id="GolferTable"></table>
-
-
 <script>
-
 function renderTable() {
+	$("#stopDetailsTbl").hide();
+	$("#noStopDetails").hide();
 	$.ajax({
 	    type: "GET",
 	    url: "getStopDetails.do",
-	    //contentType: 'application/json', 	
-	   
 	    success: function(stopDetails) {
-	    	$("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
+	    	if (stopDetails && stopDetails.length > 0) {
+	    		$("#stopDetailsTbl").show();
+	    		$("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));	
+	    	} else {
+	    		$("#noStopDetails").show();
+	    	}	    	
 	    }
 	  });
 }
@@ -101,32 +93,17 @@ function test() {
 	    url: "create.do",
 	    contentType: 'application/json', 	
 	    data: JSON.stringify({
-	    	  
 	    		    'name': $("input#stopName").val(),
 		    		'id' : $("input#stopId").val(),
 		    		'description' : $("input#stopDesc").val(),
 		    		'details': "dsdadada",
 		    		'latitude' : $("input#stopLatitude").val(),
 		    		'lontitude' : $("input#stopLongitude").val()  
-	    		 
-	    		
 	    		}),
 	    success: function(stopDetails) {
 	    	$("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
 	    }
 	  });
-	
-	
-	var Golfers = [
-	               { ID: "1", "Name": "Bobby Jones", "Birthday": "1902-03-17" },
-	               { ID: "2", "Name": "Sam Snead", "Birthday": "1912-05-27" },
-	               { ID: "3", "Name": "Tiger Woods", "Birthday": "1975-12-30" }
-	               ];
-	
-	var stopDetails = {"name":"dada","description":"eqeq","id":3131441,"details":"dsdadada","lontitude":"eqeq","latitude":"eqq"};
-	$("#GolferDiv").html($("#GolferTemplate1").render(Golfers));
-    $("#GolferTable").html($("#GolferTemplate2").render(Golfers));
-    $("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
 	
 }
 $(document).ready(function(){
