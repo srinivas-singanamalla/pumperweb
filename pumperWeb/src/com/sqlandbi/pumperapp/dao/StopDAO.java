@@ -11,5 +11,6 @@ public interface StopDAO {
 	public void updateStopDetails(Long id, StopDetails newDetails);
 	public StopDetails getStopDetails(Long id);
 	public Collection<StopDetails> getStopDetailsList();
+	public void deleteStopDetails(Long id);
 
 }

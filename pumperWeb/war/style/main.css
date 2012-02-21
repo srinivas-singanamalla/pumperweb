@@ -1,4 +1,118 @@
 @CHARSET "UTF-8";
+
+#addStopDetailsDiv {
+	margin: 45px;
+}
+#addAStop {
+	margin-left:40px;
+}
+
+.button {	
+	cursor:pointer;
+}
+/* ------------------
+ styling for the buttons
+   ------------------   */
+   
+.gradientbuttons ul{
+padding: 3px 0;
+margin-left: 0;
+margin-top: 1px;
+margin-bottom: 0;
+font: bold 13px Verdana;
+list-style-type: none;
+text-align: center; /*set to left, center, or right to align the menu as desired*/
+}
+
+.gradientbuttons li{
+display: inline;
+margin: 0;
+}
+
+
+.gradientbuttons li a, a.gradientbuttons{
+text-decoration: none;
+padding: 5px 7px;
+margin-right: 5px;
+border: 1px solid #778;
+color: white;
+border:1px solid gray;
+background: #3282c2;
+border-radius: 8px; /*w3c border radius*/
+box-shadow: 3px 3px 4px rgba(0,0,0,.5); /* w3c box shadow */
+-moz-border-radius: 8px; /* mozilla border radius */
+-moz-box-shadow: 3px 3px 4px rgba(0,0,0,.5); /* mozilla box shadow */
+background: -moz-linear-gradient(center top, #a4ccec, #72a6d4 25%, #3282c2 45%, #357cbd 85%, #72a6d4); /* mozilla gradient background */
+-webkit-border-radius: 8px; /* webkit border radius */
+-webkit-box-shadow: 3px 3px 4px rgba(0,0,0,.5); /* webkit box shadow */
+background: -webkit-gradient(linear, center top, center bottom, from(#a4ccec), color-stop(25%, #72a6d4), color-stop(45%, #3282c2), color-stop(85%, #357cbd), to(#72a6d4)); /* webkit gradient background */
+}
+
+.gradientbuttons li a:hover{
+color: lightyellow;
+}
+
+.redtheme li a{
+font-size:18px;
+background: darkred;
+background: -moz-linear-gradient(center top, #f5795d, #e55e3f 25%, #d02700 45%, #e55e3f 85%, #f5795d);
+background: -webkit-gradient(linear, center top, center bottom, from(#f5795d), color-stop(25%, #e55e3f), color-stop(45%, #d02700), color-stop(85%, #e55e3f), to(#f5795d)); 
+}
+
+.greentheme li a{
+font-size:12px;
+background: green;
+background: -moz-linear-gradient(center top, #7ad690, #3ec05c 25%, #298a40 45%, #3ec05c 85%, #7ad690);
+background: -webkit-gradient(linear, center top, center bottom, from(#7ad690), color-stop(25%, #3ec05c), color-stop(45%, #298a40), color-stop(85%, #3ec05c), to(#7ad690)); 
+}
+
+.blacktheme li a{
+font-size:16px;
+background: black;
+background: -moz-linear-gradient(center top, #9f9f9f, #686868 25%, #2a2a2a 45%, #686868 85%, #9f9f9f);
+background: -webkit-gradient(linear, center top, center bottom, from(#9f9f9f), color-stop(25%, #686868), color-stop(45%, #2a2a2a), color-stop(85%, #686868), to(#9f9f9f)); 
+}
+
+.orangetheme li a{
+font-size:14px;
+background: #e55e3f;
+background: -moz-linear-gradient(center top, #ecad9a, #e5937c 25%, #cf4c2a 45%, #e5937c 85%, #ecad9a);
+background: -webkit-gradient(linear, center top, center bottom, from(#ecad9a), color-stop(25%, #e5937c), color-stop(45%, #cf4c2a), color-stop(85%, #e5937c), to(#ecad9a)); 
+}   
+   
+a.boldbuttons{
+background: transparent url('media/roundedge-gray-left.gif') no-repeat top left;
+display: block;
+float: left;
+font: bold 13px Arial; /* Change 13px as desired */
+line-height: 22px; /* This value + 4px + 4px (top and bottom padding of SPAN) must equal height of button background (default is 30px) */
+height: 30px; /* Height of button background height */
+padding-left: 8px; /* Width of left menu image */
+text-decoration: none;
+
+}
+
+a:link.boldbuttons, a:visited.boldbuttons, a:hover.boldbuttons, a:active.boldbuttons{
+color: white; /*button text color*/
+}
+
+a.boldbuttons span{
+background: transparent url('media/roundedge-gray-right.gif') no-repeat top right;
+display: block;
+padding: 4px 10px 4px 2px; /*Set 10px to be equal or greater than'padding-left' value above*/
+}
+
+a:hover.boldbuttons{ /* Hover state CSS */
+text-decoration: underline;
+}
+
+
+.buttonwrapper{ /* Container you can use to surround a CSS button to clear float */
+overflow: hidden; /*See: http://www.quirksmode.org/css/clearing.html */
+width: 100%;
+}
+
+
 /* ------------------
  styling for the tables 
    ------------------   */
@@ -51,30 +165,31 @@ padding:14px;
 }
 
 /* ----------- stylized ----------- */
-#stylized{
+div.stylized{
 border:solid 2px #b7ddf2;
 background:#ebf4fb;
+width:500px;
 }
-#stylized h1 {
+div.stylized h1 {
 font-size:14px;
 font-weight:bold;
 margin-bottom:8px;
 }
-#stylized p{
+div.stylized p{
 font-size:11px;
 color:#666666;
 margin-bottom:20px;
 border-bottom:solid 1px #b7ddf2;
 padding-bottom:10px;
 }
-#stylized label{
+div.stylized label{
 display:block;
 font-weight:bold;
 text-align:right;
 width:140px;
 float:left;
 }
-#stylized .small{
+div.stylized .small{
 color:#666666;
 display:block;
 font-size:11px;
@@ -82,7 +197,7 @@ font-weight:normal;
 text-align:right;
 width:140px;
 }
-#stylized input{
+div.stylized input{
 float:left;
 font-size:12px;
 padding:4px 2px;
@@ -90,7 +205,7 @@ border:solid 1px #aacfe4;
 width:200px;
 margin:2px 0 20px 10px;
 }
-#stylized button{
+div.stylized button{
 clear:both;
 margin-left:150px;
 width:125px;
@@ -105,7 +220,7 @@ font-weight:bold;
 
 
 
-#hor-minimalist-b
+#stopDetailsTbl
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
 	font-size: 12px;
@@ -115,7 +230,7 @@ font-weight:bold;
 	border-collapse: collapse;
 	text-align: left;
 }
-#hor-minimalist-b th
+#stopDetailsTbl th
 {
 	font-size: 14px;
 	font-weight: normal;
@@ -123,13 +238,13 @@ font-weight:bold;
 	padding: 10px 8px;
 	border-bottom: 2px solid #6678b1;
 }
-#hor-minimalist-b td
+#stopDetailsTbl td
 {
 	border-bottom: 1px solid #ccc;
 	color: #669;
 	padding: 6px 8px;
 }
-#hor-minimalist-b tbody tr:hover td
+#stopDetailsTbl tbody tr:hover td
 {
 	color: #009;
 }

@@ -21,39 +21,11 @@
 </head>
 <body>
 
-<div id="stylized" class="myform">
-<form id="addStopForm" name="form">
-<h1>Add a Stop form</h1>
-<p>Information for a Stop</p>
-
-    <fieldset>
-        <legend>Add a Stop </legend>
-        <div>
-            <label for="name">Stop Name</label>
-            <input type="text" id="stopName" name="stopName">
-        </div>
-        <div>
-            <label for="stopId">Stop Id</label>
-            <input type="text" id="stopId" name="stopId">
-        </div>
-        <div>
-            <label for="stopDesc">Stop Description</label>
-            <input type="text" id="stopDesc" name="stopDesc">
-        </div>
-        <div>
-            <label for="stopLatitude">Latitude</label>
-            <input type="text" id="stopLatitude" name="stopLatitude">
-        </div>
-        <div>
-            <label for="stopLongitude">Longitude</label>
-            <input type="text" id="stopLongitude" name="stopLongitude">
-        </div>
-    </fieldset>
-    <input id="addStopDetails" name="addStopDetails" type="button" value="Add Stop"/>
-    <div class="spacer"></div>
-</form>
+<div id="loadingDiv">
+<h1>Loading....</h1>
 </div>
-<div name="stopDetailsList">
+
+<div name="stopDetailsList" >
 	<table id="stopDetailsTbl">
 		<tr>
 			<th>Stop Id</th>
@@ -66,9 +38,49 @@
 	<div id="noStopDetails">
 		No data available for Stops
 	</div>
+	<div class="gradientbuttons"><a id="addAStop" class="gradientbuttons button">Add a Stop</a>
+	</div>
 </div>
 
+
+<div id="addStopDetailsDiv" class="stylized">
+	<form id="addStopForm" name="form">
+	<h1>Add a Stop</h1>
+	<p>Information for a Stop</p>
+	
+	    <fieldset>
+	        <legend>Add a Stop </legend>
+	        <div>
+	            <label for="name">Stop Name</label>
+	            <input type="text" id="stopName" name="stopName">
+	        </div>
+	        <div>
+	            <label for="stopId">Stop Id</label>
+	            <input type="text" id="stopId" name="stopId">
+	        </div>
+	        <div>
+	            <label for="stopDesc">Stop Description</label>
+	            <input type="text" id="stopDesc" name="stopDesc">
+	        </div>
+	        <div>
+	            <label for="stopLatitude">Latitude<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="stopLatitude" name="stopLatitude">
+	        </div>
+	        <div>
+	            <label for="stopLongitude">Longitude<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="stopLongitude" name="stopLongitude">
+	        </div>
+	    </fieldset>
+	    <input id="addStopDetails" name="addStopDetails" type="button" value="Create"/>
+	    <div class="spacer"></div>
+	</form>
+</div>
+
+
 <script>
+
+
+
 function renderTable() {
 	$("#stopDetailsTbl").hide();
 	$("#noStopDetails").hide();
@@ -86,7 +98,9 @@ function renderTable() {
 	  });
 }
 
-function test() {
+
+
+function fetchStops() {
 	
 	$.ajax({
 	    type: "POST",
@@ -108,7 +122,26 @@ function test() {
 }
 $(document).ready(function(){
 	renderTable();
-	$('#addStopDetails').click(test);		
+	$('#addStopDetails').click(fetchStops);
+	
+	$('#loadingDiv')
+	.hide()  // hide it initially
+	.ajaxStart(function() {
+	    $(this).show();
+	})
+	.ajaxStop(function() {
+	    $(this).hide();
+	});
+	
+	$('#addStopDetailsDiv').hide();
+	
+	
+	$('#addAStop').click(function() {
+	  $('#addStopDetailsDiv').slideToggle('slow', function() {
+	    console.log("animation complete");
+	  });
+	});
+	
 });
   
 

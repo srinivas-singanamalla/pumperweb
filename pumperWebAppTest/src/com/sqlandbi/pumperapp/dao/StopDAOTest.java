@@ -148,4 +148,14 @@ public class StopDAOTest extends BaseObjectTest {
 		actualDetailCollection.removeAll(expectedList);		
 		Assert.assertEquals(0, actualDetailCollection.size());
 	}
+	
+	public void testDeleteStopDetails() {
+		StopDetails stopDetail = stopDAO.addStopDetails(getStopDetails());
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
+		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
+		
+		stopDAO.deleteStopDetails(stopDetail.getId());
+		Assert.assertEquals(0, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
+		
+	}
 }

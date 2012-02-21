@@ -70,4 +70,16 @@ public class StopDAOImpl implements StopDAO {
 		return list;
 	}
 
+	@Override
+	public void deleteStopDetails(Long id) {
+		
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			StopDetails e = pm.getObjectById(StopDetails.class, id);
+			pm.deletePersistent(e);
+		}finally {
+			pm.close();
+		}
+	}
+
 }
