@@ -16,6 +16,7 @@
             <td><i>{{=description}}</i> </td>
 			<td><i>{{=latitude}}</i> </td>
 			<td><i>{{=lontitude}}</i> </td>
+			<td><a id="configureStop" class="gradientbuttons button">Configure</a></td>
         </tr>
 </script>
 </head>

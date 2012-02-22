@@ -1,9 +1,13 @@
 package com.sqlandbi.pumperapp.domain;
 
+import java.util.List;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
+
+import com.sqlandbi.pumperapp.domain.equipment.Equipment;
 
 @PersistenceCapable
 public class StopDetails {
@@ -26,6 +30,9 @@ public class StopDetails {
 	
 	@Persistent
 	private String latitude;
+
+	@Persistent
+	private List<Equipment> equipments;
 
 	public String getName() {
 		return name;
@@ -75,6 +82,14 @@ public class StopDetails {
 		this.latitude = latitude;
 	}
 	
+	public List<Equipment> getEquipments() {
+		return equipments;
+	}
+
+	public void setEquipments(List<Equipment> equipments) {
+		this.equipments = equipments;
+	}
+
 	public StopDetails clone() {
 		StopDetails stopDetails = new StopDetails();
 		stopDetails.setDescription(description);
