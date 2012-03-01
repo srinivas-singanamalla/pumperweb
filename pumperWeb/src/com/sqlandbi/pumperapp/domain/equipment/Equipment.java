@@ -45,6 +45,4 @@ public abstract class Equipment {
 		this.description = description;
 	}
 	
-	
-	
 }

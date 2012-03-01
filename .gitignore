@@ -1,6 +1,8 @@
 *.class
 
 # Package Files #
+#!pumperWeb/war/WEB-INF/lib/
+#!pumperWeb/war/WEB-INF/lib/*
 *.jar
 *.war
 *.ear

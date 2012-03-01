@@ -1,14 +1,19 @@
 package com.sqlandbi.pumperapp.domain;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
+import javax.jdo.annotations.NotPersistent;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
 import com.sqlandbi.pumperapp.domain.equipment.Equipment;
 
+@JsonIgnoreProperties({"equipments"})
 @PersistenceCapable
 public class StopDetails {
 	
@@ -16,22 +21,22 @@ public class StopDetails {
 	private String name;
 	
 	@Persistent
-	private String description;
+	private String desc;
 	
 	@PrimaryKey
 	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long id;
+	private Long stopId;		
 	
 	@Persistent
 	private String details;
 	
 	@Persistent
-	private String lontitude;
+	private String longitude;
 	
 	@Persistent
 	private String latitude;
 
-	@Persistent
+	@NotPersistent
 	private List<Equipment> equipments;
 
 	public String getName() {
@@ -42,20 +47,20 @@ public class StopDetails {
 		this.name = name;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getDesc() {
+		return desc;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setDesc(String description) {
+		this.desc = description;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getStopId() {
+		return stopId;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setStopId(Long id) {
+		this.stopId = id;
 	}
 
 	public String getDetails() {
@@ -66,12 +71,12 @@ public class StopDetails {
 		this.details = details;
 	}
 
-	public String getLontitude() {
-		return lontitude;
+	public String getLongitude() {
+		return longitude;
 	}
 
-	public void setLontitude(String lontitude) {
-		this.lontitude = lontitude;
+	public void setLongitude(String lontitude) {
+		this.longitude = lontitude;
 	}
 
 	public String getLatitude() {
@@ -92,11 +97,11 @@ public class StopDetails {
 
 	public StopDetails clone() {
 		StopDetails stopDetails = new StopDetails();
-		stopDetails.setDescription(description);
+		stopDetails.setDesc(desc);
 		stopDetails.setDetails(details);
-		stopDetails.setId(id);
+		stopDetails.setStopId(stopId);
 		stopDetails.setLatitude(latitude);
-		stopDetails.setLontitude(lontitude);
+		stopDetails.setLongitude(longitude);
 		stopDetails.setName(name);
 		return stopDetails;
 	}
@@ -108,9 +113,9 @@ public class StopDetails {
 		}
 		StopDetails that = (StopDetails)obj;
 		
-		return that.description.equals(this.description) && that.name.equals(this.name) && 
+		return that.desc.equals(this.desc) && that.name.equals(this.name) && 
 				this.details.equals(that.details) && this.latitude.equals(that.latitude) &&
-				this.lontitude.equals(that.lontitude);
+				this.longitude.equals(that.longitude);
  		
 	}
 }

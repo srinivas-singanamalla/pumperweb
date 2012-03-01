@@ -9,7 +9,6 @@ import javax.jdo.PersistenceManager;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import com.google.appengine.api.datastore.Query;
 import com.sqlandbi.pumperapp.dao.StopDAO;
 import com.sqlandbi.pumperapp.domain.StopDetails;
 
@@ -36,7 +35,7 @@ public class StopDAOImpl implements StopDAO {
 		try {
 	    	StopDetails e = pm.getObjectById(StopDetails.class, id);
 	    	if (e != null) {
-	    		newDetails.setId(e.getId());
+	    		newDetails.setStopId(e.getStopId());
 	    		pm.makePersistent(newDetails);
 	    	}
 	    } finally {

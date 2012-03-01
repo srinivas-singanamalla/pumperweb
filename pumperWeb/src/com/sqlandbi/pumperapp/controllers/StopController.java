@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -54,17 +55,20 @@ public class StopController {
 	}*/
 	
 	@RequestMapping(value="/pumperapp/create", method=RequestMethod.POST)
-	public @ResponseBody StopDetails create(@RequestBody  StopDetails stopDetails, HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
-		//ObjectMapper mapper = new ObjectMapper();
-		//StopDetails user = mapper.readValue(account, StopDetails.class);
-//		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+	public @ResponseBody StopDetails create(@RequestBody  StopDetails stopDetails, HttpServletResponse response) throws Exception {
 		response.setContentType("application/json");
 	    StopDetails details = stopDAO.addStopDetails(stopDetails);
 	    return details;
 	}
 	
-	@RequestMapping(value="/pumperapp/getStopDetails", method=RequestMethod.GET)
-	public @ResponseBody Collection<StopDetails> getStopDetails(HttpServletResponse response) throws JsonParseException, JsonMappingException, IOException {
+	@RequestMapping(value="/pumperapp/update", method=RequestMethod.POST)
+	public void updateStopDetails (@RequestBody  StopDetails stopDetails, HttpServletResponse response) throws Exception {
+		response.setContentType("application/json");
+	   stopDAO.updateStopDetails(stopDetails.getStopId(), stopDetails);
+	}
+	
+	@RequestMapping(value="/pumperapp/getStopDetails", method=RequestMethod.GET)	
+	public @ResponseBody Collection<StopDetails> getStopDetails(HttpServletResponse response) throws Exception {
 		//ObjectMapper mapper = new ObjectMapper();
 		//StopDetails user = mapper.readValue(account, StopDetails.class);
 //		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);

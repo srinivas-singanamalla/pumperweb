@@ -11,6 +11,7 @@
         <!-- It allow @Component, @Service, @Controller, etc.. annotations. -->
         <context:component-scan base-package="com.sqlandbi.pumperapp.controllers" />
         <context:component-scan base-package="com.sqlandbi.pumperapp.dao" />
+        <context:component-scan base-package="com.sqlandbi.pumperapp.service" />
         
         <!-- It allow us to use @Autowire, @Required and @Qualifier annotations. -->
         <context:annotation-config/>

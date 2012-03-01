@@ -24,33 +24,33 @@ public class StopDAOTest extends BaseObjectTest {
 	
 	private StopDetails getStopDetails() {
 		StopDetails details = new StopDetails();
-		details.setDescription("Description of a stop");
+		details.setDesc("Description of a stop");
 		details.setDetails("Details s1");
-		details.setId(213232L);
+		details.setStopId(213232L);
 		details.setLatitude("60 23\"43'");
-		details.setLontitude("68 29\"63'");
+		details.setLongitude("68 29\"63'");
 		details.setName("Stop A");
 		return details;
 	}
 	
 	private StopDetails getStopDetails2() {
 		StopDetails details = new StopDetails();
-		details.setDescription("Description of a stop2");
+		details.setDesc("Description of a stop2");
 		details.setDetails("Details s2");
-		details.setId(2L);
+		details.setStopId(2L);
 		details.setLatitude("360 223\"143'");
-		details.setLontitude("684 229\"623'");
+		details.setLongitude("684 229\"623'");
 		details.setName("Stop B");
 		return details;
 	}
 	
 	private StopDetails getStopDetails3() {
 		StopDetails details = new StopDetails();
-		details.setDescription("Description of a stop3");
+		details.setDesc("Description of a stop3");
 		details.setDetails("Details s3");
-		details.setId(212L);
+		details.setStopId(212L);
 		details.setLatitude("50 23\"453'");
-		details.setLontitude("61 24\"863'");
+		details.setLongitude("61 24\"863'");
 		details.setName("Stop C");
 		return details;
 	}
@@ -64,7 +64,7 @@ public class StopDAOTest extends BaseObjectTest {
 		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
 		
 		Query q = new Query("StopDetails");
-		q.addFilter("id", Query.FilterOperator.EQUAL, details.getId());
+		q.addFilter("id", Query.FilterOperator.EQUAL, details.getStopId());
 		
 		PreparedQuery pq = ds.prepare(q);
 		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
@@ -86,12 +86,12 @@ public class StopDAOTest extends BaseObjectTest {
 		  String longitude = (String) result.getProperty("longitude");
 		  String latitude = (String) result.getProperty("latitude");
 		  Assert.assertEquals(expected.getName(), name);
-		  Assert.assertEquals(expected.getDescription(), description);
+		  Assert.assertEquals(expected.getDesc(), description);
 		  Assert.assertEquals(expected.getLatitude(), latitude);
-		  Assert.assertEquals(expected.getLontitude(), longitude);
+		  Assert.assertEquals(expected.getLongitude(), longitude);
 		  Assert.assertEquals(expected.getDetails(), details1);
 		  if (checkId) {
-			  Assert.assertEquals(expected.getId(), id);
+			  Assert.assertEquals(expected.getStopId(), id);
 		  }
 	}
 	
@@ -103,21 +103,21 @@ public class StopDAOTest extends BaseObjectTest {
 		stopDAO.addStopDetails(details);
 		
 		StopDetails details2 = details.clone();
-		details2.setId(null);
+		details2.setStopId(null);
 		details2.setName(details.getName() + "Test");
-		details2.setDescription(details.getDescription() + "dsdada");
-		details2.setLontitude(details.getLontitude() + "54");		
-		stopDAO.updateStopDetails(details.getId(), details2);
+		details2.setDesc(details.getDesc() + "dsdada");
+		details2.setLongitude(details.getLongitude() + "54");		
+		stopDAO.updateStopDetails(details.getStopId(), details2);
 		
 		Query q = new Query("StopDetails");
-		q.addFilter("id", Query.FilterOperator.EQUAL, details.getId());
+		q.addFilter("id", Query.FilterOperator.EQUAL, details.getStopId());
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = ds.prepare(q);
 		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
 		for (Entity result: pq.asIterable()) {
 			assertStopDetailsEntity(result, details, true);
 			assertStopDetailsEntity(result, details2, false);
-			Assert.assertEquals(details.getId(), (Long)result.getProperty("id"));	
+			Assert.assertEquals(details.getStopId(), (Long)result.getProperty("id"));	
 		}
 		//Entity result = pq.asSingleEntity();
 	}
@@ -127,7 +127,7 @@ public class StopDAOTest extends BaseObjectTest {
 		StopDetails details = getStopDetails();
 		stopDAO.addStopDetails(details);
 		
-		StopDetails actualDetail = stopDAO.getStopDetails(details.getId());
+		StopDetails actualDetail = stopDAO.getStopDetails(details.getStopId());
 		Assert.assertEquals(details, actualDetail);
 	}
 	
@@ -154,7 +154,7 @@ public class StopDAOTest extends BaseObjectTest {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
 		
-		stopDAO.deleteStopDetails(stopDetail.getId());
+		stopDAO.deleteStopDetails(stopDetail.getStopId());
 		Assert.assertEquals(0, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
 		
 	}

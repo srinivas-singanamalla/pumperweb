@@ -11,11 +11,11 @@
 
 <script id="stopDetailsTemplate" type="text/html">
         <tr>
-            <td>{{=id}}</td> 
+            <td>{{=stopId}}</td> 
             <td><b>{{=name}}</b></td> 
-            <td><i>{{=description}}</i> </td>
+            <td><i>{{=desc}}</i> </td>
 			<td><i>{{=latitude}}</i> </td>
-			<td><i>{{=lontitude}}</i> </td>
+			<td><i>{{=longitude}}</i> </td>
 			<td><a id="configureStop" class="gradientbuttons button">Configure</a></td>
         </tr>
 </script>
@@ -78,6 +78,51 @@
 </div>
 
 
+<div id="addTank" class="stylized">
+	<form id="addTankForm" name="form">
+	<h1>Add a tank to a stop</h1>
+	<p>Tank Info</p>
+	
+	    <fieldset>
+	        <legend>Add a tank </legend>
+	        <div>
+	            <label for="name">Tank Name</label>
+	            <input type="text" id="tankName" name="tankName">
+	        </div>
+	        <div>
+	            <label for="equipmentId">Equipment Id</label>
+	            <input type="text" id="equipmentId" name="equipmentId">
+	        </div>
+	        <div>
+	            <label for="equipmentDesc">Equipment Description</label>
+	            <input type="text" id="equipmentDesc" name="equipmentDesc">
+	        </div>
+	        <div>
+	            <label for="topStart">top<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="topStart" name="topStart">
+	        </div>
+	        <div>
+	            <label for="bottomStart">top<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="bottomStart" name="bottomStart">
+	        </div>
+	        <div>
+	            <label for="bbDesc">top<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="bbDescStart" name="bbDescStart">
+	        </div>
+	        <div>
+	            <label for="useCalc">top<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="useCalcStart" name="useCalcStart">
+	        </div>
+	        <div>
+	            <label for="stopLongitude">Longitude<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="stopLongitude" name="stopLongitude">
+	        </div>
+	    </fieldset>
+	    <input id="addStopDetails" name="addStopDetails" type="button" value="Create"/>
+	    <div class="spacer"></div>
+	</form>
+</div>
+
 <script>
 
 
@@ -109,11 +154,11 @@ function fetchStops() {
 	    contentType: 'application/json', 	
 	    data: JSON.stringify({
 	    		    'name': $("input#stopName").val(),
-		    		'id' : $("input#stopId").val(),
-		    		'description' : $("input#stopDesc").val(),
+		    		'stopId' : $("input#stopId").val(),
+		    		'desc' : $("input#stopDesc").val(),
 		    		'details': "dsdadada",
 		    		'latitude' : $("input#stopLatitude").val(),
-		    		'lontitude' : $("input#stopLongitude").val()  
+		    		'longitude' : $("input#stopLongitude").val()  
 	    		}),
 	    success: function(stopDetails) {
 	    	$("#stopDetailsTbl").append($("#stopDetailsTemplate").render(stopDetails));
