@@ -1,0 +1,2 @@
+#So the following helps in including all the files under this dir, but ignore *.jar elsewhere
+!*
