@@ -78,7 +78,7 @@
 </div>
 
 
-<div id="addTank" class="stylized">
+<div id="addTankDiv" class="stylized">
 	<form id="addTankForm" name="form">
 	<h1>Add a tank to a stop</h1>
 	<p>Tank Info</p>
@@ -98,35 +98,90 @@
 	            <input type="text" id="equipmentDesc" name="equipmentDesc">
 	        </div>
 	        <div>
-	            <label for="topStart">top<span class="small">34 56' 89"</span></label>
-	            <input type="text" id="topStart" name="topStart">
+	            <label for="height">Height<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="height" name="height">
 	        </div>
 	        <div>
-	            <label for="bottomStart">top<span class="small">34 56' 89"</span></label>
-	            <input type="text" id="bottomStart" name="bottomStart">
+	            <label for="radius">Radius<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="radius" name="radius">
 	        </div>
 	        <div>
-	            <label for="bbDesc">top<span class="small">34 56' 89"</span></label>
-	            <input type="text" id="bbDescStart" name="bbDescStart">
-	        </div>
-	        <div>
-	            <label for="useCalc">top<span class="small">34 56' 89"</span></label>
-	            <input type="text" id="useCalcStart" name="useCalcStart">
-	        </div>
-	        <div>
-	            <label for="stopLongitude">Longitude<span class="small">34 56' 89"</span></label>
-	            <input type="text" id="stopLongitude" name="stopLongitude">
+	            <label for="storageStock">Storage Stock<span class="small">34 56' 89"</span></label>
+	            <input type="text" id="storageStock" name="storageStock">
 	        </div>
 	    </fieldset>
-	    <input id="addStopDetails" name="addStopDetails" type="button" value="Create"/>
+	    <input id="addTank" name="addTank" type="button" value="Create"/>
+	    <div class="spacer"></div>
+	</form>
+</div>
+
+<div id="addWellheadDiv" class="stylized">
+	<form id="addWellheadForm" name="form">
+	<h1>Add a Wellhead to a stop</h1>
+	<p>Wellhead Info</p>
+	
+	    <fieldset>
+	        <legend>Add a Wellhead </legend>
+	        <div>
+	            <label for="name">Wellhead Name</label>
+	            <input type="text" id="wellheadName" name="wellheadName">
+	        </div>
+	        <div>
+	            <label for="equipmentId">Equipment Id</label>
+	            <input type="text" id="equipmentId" name="equipmentId">
+	        </div>
+	        <div>
+	            <label for="equipmentDesc">Equipment Description</label>
+	            <input type="text" id="equipmentDesc" name="equipmentDesc">
+	        </div>
+	        <div>
+	            <label for="producingMethod">Height<span class="small">34 56' 89"</span></label>
+	            <select name="producingMethod">
+				  <option>Flowing</option>
+				  <option>Gas Lift</option>
+				  <option value="selected">Hydraulic</option>
+				  <option>Injection</option>
+				  <option>Platform</option>
+				  <option>Plunger</option>
+				</select>
+	        </div>
+	    </fieldset>
+	    <input id="addWellhead" name="addWellhead" type="button" value="Create"/>
+	    <div class="spacer"></div>
+	</form>
+</div>
+
+<div id="addGasmeterDiv" class="stylized">
+	<form id="addGasmeterForm" name="form">
+	<h1>Add a Gasmeter to a stop</h1>
+	<p>Wellhead Info</p>
+	
+	    <fieldset>
+	        <legend>Add a Gasmeter </legend>	        
+	        <div>
+	            <label for="equipmentId">Gasmeter Id</label>
+	            <input type="text" id="equipmentId" name="equipmentId">
+	        </div>
+	        <div>
+	            <label for="name">Gasmeter Name</label>
+	            <input type="text" id="equipmentName" name="equipmentName">
+	        </div>
+	        <div>
+	            <label for="equipmentDesc">Gasmeter Description</label>
+	            <input type="text" id="equipmentDesc" name="equipmentDesc">
+	        </div>
+	        <div>
+	            <label for="gasmeterMaxPressure">Max Pressure</label>
+	            <input type="text" id="gasmeterMaxPressure" name="gasmeterMaxPressure">
+	        </div>
+	        
+	    </fieldset>
+	    <input id="addGasmeter" name="addGasmeter" type="button" value="Create"/>
 	    <div class="spacer"></div>
 	</form>
 </div>
 
 <script>
-
-
-
 function renderTable() {
 	$("#stopDetailsTbl").hide();
 	$("#noStopDetails").hide();

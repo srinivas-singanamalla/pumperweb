@@ -37,6 +37,16 @@ public class Tank extends Equipment {
 		this.height = height;
 	}
 	
+	public boolean equals(Object obj) {
+		if (obj instanceof Tank) {
+			Tank gm = (Tank)obj;
+			return gm.radius.equals(this.radius) &&
+					gm.height.equals(this.height) &&
+					gm.storageStock.equals(this.storageStock) &&
+				   super.equals(obj);
+		}
+		return false;
+	}
 	
 
 }

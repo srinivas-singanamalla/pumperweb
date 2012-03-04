@@ -45,4 +45,14 @@ public abstract class Equipment {
 		this.description = description;
 	}
 	
+	public boolean equals(Object obj) {
+		if (obj instanceof Equipment) {
+			Equipment gm = (Equipment)obj;
+			return gm.getName().equals(this.getName()) &&
+				   gm.getDescription().equals(this.getDescription()) &&
+				   gm.getEquipmentId().equals(this.getEquipmentId());
+		}
+		return false;
+	}
+	
 }

@@ -3,6 +3,8 @@ package com.sqlandbi.pumperapp.domain.equipment;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
+import com.sqlandbi.pumperapp.domain.StopDetails;
+
 @PersistenceCapable
 public class Gasmeter extends Equipment {
 
@@ -17,7 +19,15 @@ public class Gasmeter extends Equipment {
 		this.maxPressure = maxPressure;
 	}
 	
-	
-	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Gasmeter) {
+			Gasmeter gm = (Gasmeter)obj;
+			return gm.maxPressure.equals(this.maxPressure) && 
+				   super.equals(obj);
+		}
+		return false;
+ 		
+	}
 	
 }
