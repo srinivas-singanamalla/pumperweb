@@ -1,29 +1,17 @@
 package com.sqlandbi.pumperapp.dao.readings;
 
-import org.junit.Test;
+import com.sqlandbi.pumperapp.domain.readings.TankReading;
 
-import com.sqlandbi.pumperapp.BaseObjectTest;
-
-public class TankReadingDaoTest extends BaseObjectTest {
+public class TankReadingDaoTest extends ReadingDAOTest<TankReading> {
 	
-	@Test
-	public void testAddReading() {
-		throw new UnsupportedOperationException();
+	@Override
+	public ReadingDAO<TankReading> getReadingDAO() {
+		return new TankReadingDAOImpl();
 	}
 	
-	@Test
-	public void testUpdateReading() {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Test
-	public void testGetReadings() {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Test
-	public void testDeleteReadings() {
-		throw new UnsupportedOperationException();
+	@Override
+	public TestReadings<TankReading> getTestParams() {
+		return new TankTestReadings();
 	}
 
 }

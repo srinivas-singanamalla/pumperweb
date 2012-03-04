@@ -3,27 +3,22 @@ package com.sqlandbi.pumperapp.dao.readings;
 import org.junit.Test;
 
 import com.sqlandbi.pumperapp.BaseObjectTest;
+import com.sqlandbi.pumperapp.domain.readings.GasmeterReading;
+import com.sqlandbi.pumperapp.domain.readings.WellheadReading;
 
-public class WellheadReadingTest extends BaseObjectTest{
-	
-	@Test
-	public void testAddReading() {
-		throw new UnsupportedOperationException();
+
+public class WellheadReadingTest extends ReadingDAOTest<WellheadReading>{
+
+	@Override
+	public TestReadings<WellheadReading> getTestParams() {
+		return new WellheadTestReadings();
+	}
+
+	@Override
+	public ReadingDAO<WellheadReading> getReadingDAO() {
+		return new WellheadReadingDAOImpl();
 	}
 	
-	@Test
-	public void testUpdateReading() {
-		throw new UnsupportedOperationException();
-	}
 	
-	@Test
-	public void testGetReadings() {
-		throw new UnsupportedOperationException();
-	}
-	
-	@Test
-	public void testDeleteReadings() {
-		throw new UnsupportedOperationException();
-	}
 
 }
