@@ -16,6 +16,10 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.sqlandbi.pumperapp.BaseObjectTest;
 import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.equipment.Equipment;
+import com.sqlandbi.pumperapp.domain.equipment.Gasmeter;
+import com.sqlandbi.pumperapp.domain.equipment.Tank;
+import com.sqlandbi.pumperapp.domain.equipment.Wellhead;
 
 public class StopDAOTest extends BaseObjectTest {
 	
@@ -157,5 +161,97 @@ public class StopDAOTest extends BaseObjectTest {
 		stopDAO.deleteStopDetails(stopDetail.getStopId());
 		Assert.assertEquals(0, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
 		
+	}
+	
+	
+
+	private Equipment getEquipmentTank1StopA() {
+		Tank tank = new Tank();
+		tank.setDescription("Tank Desc 1");
+		tank.setName("Tank Name A");
+		tank.setHeight(90.0);
+		tank.setHeight(77.0);
+		return tank;
+	}
+	
+	private Equipment getEquipmentTank2StopA() {
+		Tank tank = new Tank();
+		tank.setDescription("Tank Desc 2");
+		tank.setName("Tank Name B");
+		tank.setHeight(34.0);
+		tank.setRadius(66.0);
+		return tank;
+	}
+	
+	private Equipment getEquipmentGasmeterStopA() {
+		Gasmeter tank = new Gasmeter();
+		tank.setDescription("Tank Desc 1");
+		tank.setName("Tank Name A");
+		tank.setMaxPressure(45.0);
+		return tank;
+	}
+	
+	private Equipment getEquipmentWellheadStopA() {
+		Wellhead tank = new Wellhead();
+		tank.setDescription("Tank Desc 1");
+		tank.setName("Tank Name A");
+		tank.setCasingPressure(45.0);
+		tank.setComments("dadadsa");
+		tank.setDownTime(56L);
+		tank.setProducingMethod(2);
+		tank.setTubingPressure(66.0);
+		
+		return tank;
+	}
+	
+	@Test
+	public void testAddEquipment() {
+		StopDetails stop = stopDAO.addStopDetails(getStopDetails());
+		getStopDAO().addEquipment(stop.getStopId(), getEquipmentTank1StopA());
+		getStopDAO().addEquipment(stop.getStopId(), getEquipmentTank2StopA());
+		getStopDAO().addEquipment(stop.getStopId(), getEquipmentGasmeterStopA());
+		getStopDAO().addEquipment(stop.getStopId(), getEquipmentWellheadStopA());
+		
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();	
+		Assert.assertEquals(2, ds.prepare(new Query(Tank.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Gasmeter.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Wellhead.class.getSimpleName())).countEntities(withLimit(10)));
+		
+		StopDetails stopDetails = getStopDAO().getStopDetails(stop.getStopId());
+		Assert.assertEquals(stopDetails.getEquipments().size(), 4);
+	}
+	
+	@Test
+	public void testGetEquipments() {
+		StopDetails stop = stopDAO.addStopDetails(getStopDetails());
+		Collection<Equipment> equipments = new ArrayList<Equipment>();
+		equipments.add(getEquipmentTank1StopA());
+		equipments.add(getEquipmentTank2StopA());
+		equipments.add(getEquipmentGasmeterStopA());
+		equipments.add(getEquipmentWellheadStopA());
+		
+		for (Equipment eqmt : equipments) {
+			getStopDAO().addEquipment(stop.getStopId(), eqmt);
+		}
+		
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();	
+		Assert.assertEquals(2, ds.prepare(new Query(Tank.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Gasmeter.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Wellhead.class.getSimpleName())).countEntities(withLimit(10)));
+		
+		StopDetails stopDetails = getStopDAO().getStopDetails(stop.getStopId());
+		Assert.assertEquals(stopDetails.getEquipments().size(), 4);
+		Collection<Equipment> actualEquipments = getStopDAO().getEquipments(stopDetails.getStopId());
+		equipments.removeAll(actualEquipments);
+		Assert.assertEquals(0, equipments.size());
+	}
+	@Test
+	public void testDeleteEquipment() {
+		//throw new UnsupportedOperationException();
+		
+	}
+	
+	StopDAO getStopDAO() {
+		return stopDAO;
 	}
 }

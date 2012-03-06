@@ -2,6 +2,7 @@ package com.sqlandbi.pumperapp.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.NotPersistent;
@@ -11,6 +12,7 @@ import javax.jdo.annotations.PrimaryKey;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+import com.google.appengine.api.datastore.Key;
 import com.sqlandbi.pumperapp.domain.equipment.Equipment;
 
 @JsonIgnoreProperties({"equipments"})
@@ -36,8 +38,8 @@ public class StopDetails {
 	@Persistent
 	private String latitude;
 
-	@NotPersistent
-	private List<Equipment> equipments;
+	@Persistent
+    private Set<Key> equipments;
 
 	public String getName() {
 		return name;
@@ -87,11 +89,11 @@ public class StopDetails {
 		this.latitude = latitude;
 	}
 	
-	public List<Equipment> getEquipments() {
+	public Set<Key> getEquipments() {
 		return equipments;
 	}
 
-	public void setEquipments(List<Equipment> equipments) {
+	public void setEquipments(Set<Key> equipments) {
 		this.equipments = equipments;
 	}
 

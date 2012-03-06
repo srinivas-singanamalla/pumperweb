@@ -1,6 +1,5 @@
 package com.sqlandbi.pumperapp.dao;
 
-public interface EquipmentDAO {
-	
+public class StopEquipmentDAO {
 
 }

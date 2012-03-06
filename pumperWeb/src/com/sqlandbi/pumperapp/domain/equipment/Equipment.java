@@ -7,13 +7,11 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.InheritanceStrategy;
 import javax.jdo.annotations.PrimaryKey;
 
+import com.google.appengine.api.datastore.Key;
+
 @Inheritance(strategy = InheritanceStrategy.SUBCLASS_TABLE)
 @PersistenceCapable
 public abstract class Equipment {
-	
-	@PrimaryKey
-	@Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Long equipmentId;
 	
 	@Persistent
 	private String name;
@@ -21,11 +19,15 @@ public abstract class Equipment {
 	@Persistent
 	private String description;
 	
-	public Long getEquipmentId() {
+	@PrimaryKey
+    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
+    private Key equipmentId;
+	
+	public Key getEquipmentId() {
 		return equipmentId;
 	}
 
-	public void setEquipmentId(Long equipmentId) {
+	public void setEquipmentId(Key equipmentId) {
 		this.equipmentId = equipmentId;
 	}
 
