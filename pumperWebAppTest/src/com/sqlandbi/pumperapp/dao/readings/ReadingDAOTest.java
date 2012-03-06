@@ -22,6 +22,8 @@ public abstract class ReadingDAOTest<T> extends BaseObjectTest {
 	
 	public abstract ReadingDAO<T> getReadingDAO();
 	
+	protected abstract Class<?> getReadingClass();
+	
 	@Test
 	public void testAddReading() {
 		T expected = getTestParams().getDayOneReading();
@@ -32,8 +34,8 @@ public abstract class ReadingDAOTest<T> extends BaseObjectTest {
 		getReadingDAO().addReading(getTestParams().getNextDayReading());
 		getReadingDAO().addReading(getTestParams().getDayOneReading2());
 		
-		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();		
-		Assert.assertEquals(4, ds.prepare(new Query("GasmeterReading")).countEntities(withLimit(10)));
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();	
+		Assert.assertEquals(4, ds.prepare(new Query(this.getReadingClass().getSimpleName())).countEntities(withLimit(10)));
 	}
 	
 	@Test
@@ -42,11 +44,12 @@ public abstract class ReadingDAOTest<T> extends BaseObjectTest {
 		
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		T actual = getReadingDAO().addReading(expected);	
-		Assert.assertEquals(1, ds.prepare(new Query("GasmeterReading")).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(this.getReadingClass().getSimpleName())).countEntities(withLimit(10)));
 		
 		T expected2 = getTestParams().getDayOneMidReading();
-		getReadingDAO().updateReading(((Reading)actual).getReadingId(), getTestParams().getDayOneMidReading());				
-		Assert.assertEquals(1, ds.prepare(new Query("GasmeterReading")).countEntities(withLimit(10)));
+		Long readingId = ((Reading)actual).getReadingId();
+		getReadingDAO().updateReading(readingId, getTestParams().getDayOneMidReading());				
+		Assert.assertEquals(1, ds.prepare(new Query(this.getReadingClass().getSimpleName())).countEntities(withLimit(10)));
 		
 		Collection<T> readingDataCollection = getReadingDAO().getReadings(getDayone(), getNextDay());		
 		for (T reading : readingDataCollection) {
@@ -89,10 +92,10 @@ public abstract class ReadingDAOTest<T> extends BaseObjectTest {
 		
 		getReadingDAO().deleteReadings(getDayone(), getDayone());
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();		
-		Assert.assertEquals(4, ds.prepare(new Query("GasmeterReading")).countEntities(withLimit(10)));
+		Assert.assertEquals(4, ds.prepare(new Query(this.getReadingClass().getSimpleName())).countEntities(withLimit(10)));
 		
 		getReadingDAO().deleteReadings(getDayone(), getNextDay());
-		Assert.assertEquals(1, ds.prepare(new Query("GasmeterReading")).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(this.getReadingClass().getSimpleName())).countEntities(withLimit(10)));
 	}
 	
 	

@@ -7,7 +7,7 @@ import com.sqlandbi.pumperapp.domain.readings.Reading;
 
 public interface ReadingDAO<T> {
 
-public T addReading(T reading);
+	public T addReading(T reading);
 	
 	public void updateReading(Long id, T newDetails);
 	

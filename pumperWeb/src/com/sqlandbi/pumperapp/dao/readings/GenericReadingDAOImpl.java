@@ -11,20 +11,12 @@ import org.springframework.util.CollectionUtils;
 import com.sqlandbi.pumperapp.dao.PMF;
 import com.sqlandbi.pumperapp.domain.readings.GasmeterReading;
 import com.sqlandbi.pumperapp.domain.readings.Reading;
-import com.sqlandbi.pumperapp.domain.readings.TankReading;
 
-public class GasmeterReadingDAOImpl extends GenericReadingDAOImpl<GasmeterReading> implements GasmeterReadingDAO {
-
+public abstract class GenericReadingDAOImpl<T extends Reading> implements ReadingDAO<T> {
+	
 	@Override
-	protected Class getReadingClass() {
-		// TODO Auto-generated method stub
-		return GasmeterReading.class;
-	}
-
-	/*@Override
-	public GasmeterReading addReading(GasmeterReading reading) {
+	public T addReading(T reading) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		
 		try {
 			return pm.makePersistent(reading);
 		} finally {
@@ -33,11 +25,11 @@ public class GasmeterReadingDAOImpl extends GenericReadingDAOImpl<GasmeterReadin
 	}
 
 	@Override
-	public void updateReading(Long id, Reading newDetails) {
+	public void updateReading(Long id, T newDetails) { //TODO fix me
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 	    
 		try {
-			GasmeterReading e = (GasmeterReading) pm.getObjectById(newDetails.getClass(), id);
+			T e = (T) pm.getObjectById(this.getReadingClass(), id);
 	    	if (e != null) {
 	    		newDetails.setReadingId(id);
 	    		pm.makePersistent(newDetails);
@@ -49,14 +41,14 @@ public class GasmeterReadingDAOImpl extends GenericReadingDAOImpl<GasmeterReadin
 	}
 
 	@Override
-	public Collection<GasmeterReading> getReadings(Long startTime, Long endTime) {
+	public Collection<T> getReadings(Long startTime, Long endTime) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		try {
 			Query query = getQuery(pm);
 			query.setOrdering("date descending");
-			Collection<GasmeterReading> results = (Collection<GasmeterReading>)query.execute(startTime, endTime);
-			Collection<GasmeterReading> list = pm.detachCopyAll(results);
+			Collection<T> results = (Collection<T>)query.execute(startTime, endTime);
+			Collection<T> list = pm.detachCopyAll(results);
 			if (CollectionUtils.isEmpty(list)) {
 				return Collections.emptyList();
 			}
@@ -67,12 +59,14 @@ public class GasmeterReadingDAOImpl extends GenericReadingDAOImpl<GasmeterReadin
 	}
 
 	private Query getQuery(PersistenceManager pm) {
-		Query query = pm.newQuery(GasmeterReading.class,
+		Query query = pm.newQuery(this.getReadingClass(),
                 "date >= startTime && date < endTime");
 		query.declareImports("import java.util.Date");
 		query.declareParameters("Date startTime, Date endTime");
 		return query;
 	}
+	
+	protected abstract Class getReadingClass();
 	
 	@Override
 	public void deleteReadings(Long startTime, Long endTime) {
@@ -81,11 +75,12 @@ public class GasmeterReadingDAOImpl extends GenericReadingDAOImpl<GasmeterReadin
 		try {
 			
 			Query query = getQuery(pm);
-			Collection results = (Collection)query.execute(startTime, endTime);
+			Collection<T> results = (Collection<T>)query.execute(startTime, endTime);
 			pm.deletePersistentAll(results);
 		} finally {
 	        pm.close();
 	    }
 		
-	}*/
+	}
+
 }

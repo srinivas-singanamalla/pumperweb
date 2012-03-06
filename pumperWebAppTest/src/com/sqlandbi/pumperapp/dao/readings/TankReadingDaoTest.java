@@ -1,5 +1,6 @@
 package com.sqlandbi.pumperapp.dao.readings;
 
+import com.sqlandbi.pumperapp.domain.readings.Reading;
 import com.sqlandbi.pumperapp.domain.readings.TankReading;
 
 public class TankReadingDaoTest extends ReadingDAOTest<TankReading> {
@@ -14,4 +15,9 @@ public class TankReadingDaoTest extends ReadingDAOTest<TankReading> {
 		return new TankTestReadings();
 	}
 
+	@Override
+	protected Class<?> getReadingClass() {
+		// TODO Auto-generated method stub
+		return TankReading.class;
+	}
 }

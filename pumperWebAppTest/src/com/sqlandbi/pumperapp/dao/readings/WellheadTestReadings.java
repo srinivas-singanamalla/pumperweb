@@ -12,6 +12,7 @@ public class WellheadTestReadings extends TestReadings<WellheadReading>{
 		reading.setChokeSize(45.0);
 		reading.setComments("rwrwrw");
 		reading.setDowntime(432.0);
+		reading.setDailyProducingStatus(23);
 		reading.setTubingPressure(33.0);
 		return reading;
 	}
@@ -25,6 +26,7 @@ public class WellheadTestReadings extends TestReadings<WellheadReading>{
 		reading.setComments("dadarwrwrw");
 		reading.setDowntime(43.0);
 		reading.setTubingPressure(3.0);
+		reading.setDailyProducingStatus(223);
 		return reading;
 	}
 
@@ -36,6 +38,7 @@ public class WellheadTestReadings extends TestReadings<WellheadReading>{
 		reading.setChokeSize(52.0);
 		reading.setComments("da2222darwrwrw");
 		reading.setDowntime(423.0);
+		reading.setDailyProducingStatus(23);
 		reading.setTubingPressure(32.0);
 		return reading;
 	}
@@ -49,6 +52,7 @@ public class WellheadTestReadings extends TestReadings<WellheadReading>{
 		reading.setComments("da555darwrwrw");
 		reading.setDowntime(435.0);
 		reading.setTubingPressure(35.0);
+		reading.setDailyProducingStatus(283);
 		return reading;
 	}
 

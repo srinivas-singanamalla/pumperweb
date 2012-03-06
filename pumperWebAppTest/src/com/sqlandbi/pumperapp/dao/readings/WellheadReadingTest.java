@@ -18,6 +18,11 @@ public class WellheadReadingTest extends ReadingDAOTest<WellheadReading>{
 	public ReadingDAO<WellheadReading> getReadingDAO() {
 		return new WellheadReadingDAOImpl();
 	}
+
+	@Override
+	protected Class<?> getReadingClass() {
+		return WellheadReading.class;
+	}
 	
 	
 
