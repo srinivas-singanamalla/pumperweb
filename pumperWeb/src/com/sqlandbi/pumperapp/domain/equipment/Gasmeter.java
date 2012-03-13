@@ -3,7 +3,7 @@ package com.sqlandbi.pumperapp.domain.equipment;
 import javax.jdo.annotations.PersistenceCapable;
 import javax.jdo.annotations.Persistent;
 
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 
 @PersistenceCapable
 public class Gasmeter extends Equipment {

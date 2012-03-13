@@ -21,13 +21,24 @@ public abstract class Equipment {
 	
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-    private Key equipmentId;
+    private Long equipmentId;
 	
-	public Key getEquipmentId() {
+	@Persistent
+	private Long stopId;
+	
+	public Long getStopId() {
+		return stopId;
+	}
+
+	public void setStopId(Long stopId) {
+		this.stopId = stopId;
+	}
+
+	public Long getEquipmentId() {
 		return equipmentId;
 	}
 
-	public void setEquipmentId(Key equipmentId) {
+	public void setEquipmentId(Long equipmentId) {
 		this.equipmentId = equipmentId;
 	}
 

@@ -2,10 +2,10 @@ package com.sqlandbi.pumperapp.dao;
 
 import java.util.Collection;
 
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 
 public interface RouteDAO {
 	
-	Collection<StopDetails> getStops();
+	Collection<Stop> getStops();
 
 }

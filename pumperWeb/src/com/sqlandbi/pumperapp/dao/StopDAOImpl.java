@@ -1,5 +1,6 @@
 package com.sqlandbi.pumperapp.dao;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,16 +15,20 @@ import org.springframework.util.CollectionUtils;
 
 import com.google.appengine.api.datastore.Key;
 import com.sqlandbi.pumperapp.dao.StopDAO;
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 import com.sqlandbi.pumperapp.domain.equipment.Equipment;
+import com.sqlandbi.pumperapp.domain.equipment.Gasmeter;
 import com.sqlandbi.pumperapp.domain.equipment.Tank;
 import com.sqlandbi.pumperapp.domain.equipment.Wellhead;
 
 @Component
 public class StopDAOImpl implements StopDAO {
 
+	final List<Class<? extends Equipment>> equipmentClassList =
+	        Arrays.asList(Wellhead.class, Tank.class, Gasmeter.class);
+	
 	@Override
-	public StopDetails addStopDetails(StopDetails stopDetails) {
+	public Stop addStopDetails(Stop stopDetails) {
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
@@ -35,12 +40,12 @@ public class StopDAOImpl implements StopDAO {
 	}
 
 	@Override
-	public void updateStopDetails(Long id, StopDetails newDetails) {
+	public void updateStopDetails(Long id, Stop newDetails) {
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 	    
 		try {
-	    	StopDetails e = pm.getObjectById(StopDetails.class, id);
+	    	Stop e = pm.getObjectById(Stop.class, id);
 	    	if (e != null) {
 	    		newDetails.setStopId(e.getStopId());
 	    		pm.makePersistent(newDetails);
@@ -52,12 +57,12 @@ public class StopDAOImpl implements StopDAO {
 	}
 
 	@Override
-	public StopDetails getStopDetails(Long id) {
+	public Stop getStopDetails(Long id) {
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		
 		try {
-			StopDetails e = pm.getObjectById(StopDetails.class, id);
+			Stop e = pm.getObjectById(Stop.class, id);
 			return e;
 		}finally {
 			pm.close();
@@ -65,11 +70,11 @@ public class StopDAOImpl implements StopDAO {
 	}
 
 	@Override
-	public Collection<StopDetails> getStopDetailsList() {
+	public Collection<Stop> getStopDetailsList() {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
-		javax.jdo.Query query = pm.newQuery(StopDetails.class);
-		Collection<StopDetails> results = (Collection<StopDetails>) query.execute();
-		Collection<StopDetails> list = pm.detachCopyAll(results);
+		javax.jdo.Query query = pm.newQuery(Stop.class);
+		Collection<Stop> results = (Collection<Stop>) query.execute();
+		Collection<Stop> list = pm.detachCopyAll(results);
 		if (CollectionUtils.isEmpty(list)) {
 			return Collections.emptyList();
 		}
@@ -81,7 +86,7 @@ public class StopDAOImpl implements StopDAO {
 		
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		try {
-			StopDetails e = pm.getObjectById(StopDetails.class, id);
+			Stop e = pm.getObjectById(Stop.class, id);
 			pm.deletePersistent(e);
 		}finally {
 			pm.close();
@@ -90,36 +95,22 @@ public class StopDAOImpl implements StopDAO {
 
 	@Override
 	public Collection<Equipment> getEquipments(Long stopId) {
-		Collection<Equipment> list = Collections.emptyList();
-		PersistenceManager pm = PMF.get().getPersistenceManager();
-		StopDetails e = pm.getObjectById(StopDetails.class, stopId);
-		Key sampleKey = null;
-		for (Key key: e.getEquipments()) {
-			sampleKey = key;
-			break;
-		}
+		Collection<Equipment> list = null;
 		
-		if (e.getEquipments() != null && e.getEquipments().size() > 0) {
-			Query query = pm.newQuery(Equipment.class,
-	                ":p.contains(equipmentId)");
-//			query.declareParameters(Key.class.getName() + " favoriteFoodParam");
-			Collection<Equipment> results = (Collection<Equipment>) query.execute(e.getEquipments());
-			if (!CollectionUtils.isEmpty(results)) {
-				results = pm.detachCopyAll(results);
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		for (Class<? extends Equipment> equipmentClass : equipmentClassList) {
+			Query query = pm.newQuery(equipmentClass,
+	                "stopId == stopIdParam");
+			query.declareParameters("Long stopIdParam");
+			Collection<Equipment> wellheads = (Collection<Equipment>)query.execute(stopId);
+			if (!CollectionUtils.isEmpty(wellheads)) {
+				if (list == null) {
+					list = new ArrayList<Equipment>();
+				}
+				list.addAll(pm.detachCopyAll(wellheads));
 			}
 		}
-		/*
-		if (e.getEquipments() != null && e.getEquipments().size() > 0) {
-			Query query = pm.newQuery(Wellhead.class);
-			query.setFilter("equipmentId == favoriteFoodParam");
-		    query.declareParameters(Key.class.getName() + " favoriteFoodParam");
-		    Collection<Equipment> results = (Collection<Equipment>) query.execute(sampleKey);
-		    
-			if (!CollectionUtils.isEmpty(results)) {
-				list = pm.detachCopyAll(results);
-			}
-		}*/
-		return list;
+		return list != null ? list : new ArrayList<Equipment>();
 	}
 
 	@Override
@@ -127,16 +118,40 @@ public class StopDAOImpl implements StopDAO {
 		PersistenceManager pm = PMF.get().getPersistenceManager();
 		Equipment storedequipment = null;
 		try {
+			equipment.setStopId(stopId);
 			storedequipment = pm.makePersistent(equipment);
-			StopDetails e = pm.getObjectById(StopDetails.class, stopId);
-			Set<Key> equipmentKeys = e.getEquipments();
-			equipmentKeys.add(storedequipment.getEquipmentId());
 			return storedequipment;
 		} finally {
 			pm.close();
 		}
 	}
 
+	@Override
+	public void deleteEquipments(Long stopId) {
+		Collection<Equipment> list = null;
+		PersistenceManager pm = PMF.get().getPersistenceManager();
+		try {
+			for (Class<? extends Equipment> equipmentClass : equipmentClassList) {
+				Query query = pm.newQuery(equipmentClass,
+		                "stopId == stopIdParam");
+				query.declareParameters("Long stopIdParam");
+				Collection<Equipment> wellheads = (Collection<Equipment>)query.execute(stopId);
+				if (!CollectionUtils.isEmpty(wellheads)) {
+					if (list == null) {
+						list = new ArrayList<Equipment>();
+					}
+					list.addAll(pm.detachCopyAll(wellheads));
+				}
+			}
+			
+			for (Equipment equipment : list) {
+				Equipment e = pm.getObjectById(Equipment.class, equipment.getEquipmentId());
+				pm.deletePersistent(e);
+			}
+		} finally {
+			pm.close();
+		}
+	}
 	@Override
 	public void deleteEquipment(Long equipmentId) {
 		PersistenceManager pm = PMF.get().getPersistenceManager();

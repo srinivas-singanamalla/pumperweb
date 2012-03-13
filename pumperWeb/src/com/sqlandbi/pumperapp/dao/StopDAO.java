@@ -3,18 +3,18 @@ package com.sqlandbi.pumperapp.dao;
 import java.util.Collection;
 import java.util.List;
 
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 import com.sqlandbi.pumperapp.domain.equipment.Equipment;
 
 public interface StopDAO {
 	
-	public StopDetails addStopDetails(StopDetails stopDetails);
+	public Stop addStopDetails(Stop stopDetails);
 	
-	public void updateStopDetails(Long id, StopDetails newDetails);
+	public void updateStopDetails(Long id, Stop newDetails);
 	
-	public StopDetails getStopDetails(Long id);
+	public Stop getStopDetails(Long id);
 	
-	public Collection<StopDetails> getStopDetailsList();
+	public Collection<Stop> getStopDetailsList();
 	
 	public void deleteStopDetails(Long id);
 
@@ -23,4 +23,6 @@ public interface StopDAO {
 	public void deleteEquipment(Long equipmentId);
 
 	Equipment addEquipment(Long stopId, Equipment equipment);
+
+	void deleteEquipments(Long stopId);
 }

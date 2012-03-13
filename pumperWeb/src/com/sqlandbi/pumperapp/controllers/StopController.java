@@ -24,7 +24,7 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.sqlandbi.pumperapp.dao.StopDAO;
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 
 @Controller
 public class StopController {
@@ -55,25 +55,25 @@ public class StopController {
 	}*/
 	
 	@RequestMapping(value="/pumperapp/create", method=RequestMethod.POST)
-	public @ResponseBody StopDetails create(@RequestBody  StopDetails stopDetails, HttpServletResponse response) throws Exception {
+	public @ResponseBody Stop create(@RequestBody  Stop stopDetails, HttpServletResponse response) throws Exception {
 		response.setContentType("application/json");
-	    StopDetails details = stopDAO.addStopDetails(stopDetails);
+	    Stop details = stopDAO.addStopDetails(stopDetails);
 	    return details;
 	}
 	
 	@RequestMapping(value="/pumperapp/update", method=RequestMethod.POST)
-	public void updateStopDetails (@RequestBody  StopDetails stopDetails, HttpServletResponse response) throws Exception {
+	public void updateStopDetails (@RequestBody  Stop stopDetails, HttpServletResponse response) throws Exception {
 		response.setContentType("application/json");
 	   stopDAO.updateStopDetails(stopDetails.getStopId(), stopDetails);
 	}
 	
 	@RequestMapping(value="/pumperapp/getStopDetails", method=RequestMethod.GET)	
-	public @ResponseBody Collection<StopDetails> getStopDetails(HttpServletResponse response) throws Exception {
+	public @ResponseBody Collection<Stop> getStopDetails(HttpServletResponse response) throws Exception {
 		//ObjectMapper mapper = new ObjectMapper();
 		//StopDetails user = mapper.readValue(account, StopDetails.class);
 //		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 		response.setContentType("application/json");
-	    Collection<StopDetails> details = stopDAO.getStopDetailsList();
+	    Collection<Stop> details = stopDAO.getStopDetailsList();
 	    return details;
 	}
 

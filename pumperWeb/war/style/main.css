@@ -1,5 +1,30 @@
 @CHARSET "UTF-8";
 
+.wrapper{
+    overflow:hidden;
+    zoom:1;
+}
+
+.fixedLeft{
+    float:left;
+    width:200px;
+    height:100%;
+}
+
+.fixedRight{
+    float:right;
+    width:100px;
+    background: blue;
+    height:100%;
+}
+.flexCenter{
+    background: red;
+    overflow:hidden;
+    zoom:1;
+    height:100%;
+}
+
+
 #addStopDetailsDiv {
 	margin: 45px;
 }

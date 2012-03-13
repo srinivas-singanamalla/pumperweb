@@ -17,8 +17,6 @@ public class Route {
 	
 	@Persistent
 	private String name;
-	
-	
 
 	public Long getRouteId() {
 		return routeId;

@@ -7,7 +7,12 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="../js/jquery-1.7.1.js"></script>
 <script type="text/javascript" src="../js/jsrender.js"></script>
+<script type="text/javascript" src="../js/jstree/jquery.jstree.js"></script>
 <link rel="stylesheet" type="text/css" href="../style/main.css" media="screen" />
+<link rel="stylesheet" type="text/css" href="../js/jstree/themes/default/style.css" media="screen" />
+
+
+
 
 <script id="stopDetailsTemplate" type="text/html">
         <tr>
@@ -22,7 +27,39 @@
 </head>
 <body>
 
-<div id="loadingDiv">
+<div class="wrapper">
+ <div class="fixedLeft">
+ 
+	 <div id="pumperTree">
+	 	<ul>
+	 		<li id="phtml_1"><a href="test">Route 1</a>
+	 			<ul>
+	 				<li><a href="test">Stop 1</a>
+	 					<ul>
+	 						<li><a href="test">Tank 1</a></li>
+	 						<li><a href="test">Tank 2</a></li>
+	 						<li><a href="test">Wellhead 1</a></li>
+	 					</ul>
+	 				</li>
+	 				<li><a href="test">Stop 2</a>
+	 					<ul>
+	 						<li><a href="test">Tank 1</a></li>
+	 						<li><a href="test">Tank 2</a></li>
+	 						<li><a href="test">Wellhead 1</a></li>
+	 					</ul>
+	 				</li>
+	 				<li><a href="test">Stop 3</a></li>
+	 			</ul>
+	 			
+	 		</li>
+	 		<li><a href="test">Route 2</a></li>
+	 		<li><a href="test">Route 3</a></li>
+	 	</ul>
+	 </div>
+ </div>
+ <div class="fixedRight">Right Stuff</div>
+ <div class="flexCenter">
+ 	<div id="loadingDiv">
 <h1>Loading....</h1>
 </div>
 
@@ -72,7 +109,7 @@
 	            <input type="text" id="stopLongitude" name="stopLongitude">
 	        </div>
 	    </fieldset>
-	    <input id="addStopDetails" name="addStopDetails" type="button" value="Create"/>
+  	    <input id="addStopDetails" name="addStopDetails" type="button" value="Create"/>
 	    <div class="spacer"></div>
 	</form>
 </div>
@@ -180,6 +217,11 @@
 	    <div class="spacer"></div>
 	</form>
 </div>
+ 	
+ </div>
+ 
+ <br style="clear: left;" />
+</div>
 
 <script>
 function renderTable() {
@@ -199,6 +241,13 @@ function renderTable() {
 	  });
 }
 
+
+function renderPumperTree() {
+	//$("#pumperTree").jstree();
+	$("#pumperTree")
+	.jstree({ "plugins" : ["themes","html_data","ui"] });
+
+}
 
 
 function fetchStops() {
@@ -221,6 +270,11 @@ function fetchStops() {
 	  });
 	
 }
+
+function addAnEquipment() {
+	
+}
+
 $(document).ready(function(){
 	renderTable();
 	$('#addStopDetails').click(fetchStops);
@@ -242,6 +296,8 @@ $(document).ready(function(){
 	    console.log("animation complete");
 	  });
 	});
+	
+	renderPumperTree();
 	
 });
   

@@ -1,10 +1,10 @@
 package com.sqlandbi.pumperapp.service;
 
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 
 public interface StopService {	
 	
-	public StopDetails addStopDetails(StopDetails stopDetails);
+	public Stop addStopDetails(Stop stopDetails);
 	
 	public boolean exists(Long stopId);
 

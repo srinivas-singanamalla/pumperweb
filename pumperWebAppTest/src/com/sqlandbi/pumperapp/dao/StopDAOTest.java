@@ -15,10 +15,11 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.sqlandbi.pumperapp.BaseObjectTest;
-import com.sqlandbi.pumperapp.domain.StopDetails;
+import com.sqlandbi.pumperapp.domain.Stop;
 import com.sqlandbi.pumperapp.domain.equipment.Equipment;
 import com.sqlandbi.pumperapp.domain.equipment.Gasmeter;
 import com.sqlandbi.pumperapp.domain.equipment.Tank;
+import com.sqlandbi.pumperapp.domain.equipment.Tank.StorageStockType;
 import com.sqlandbi.pumperapp.domain.equipment.Wellhead;
 
 public class StopDAOTest extends BaseObjectTest {
@@ -26,8 +27,8 @@ public class StopDAOTest extends BaseObjectTest {
 	//TODO use AutoWired
 	private StopDAO stopDAO = new StopDAOImpl();
 	
-	private StopDetails getStopDetails() {
-		StopDetails details = new StopDetails();
+	private Stop getStopDetails() {
+		Stop details = new Stop();
 		details.setDesc("Description of a stop");
 		details.setDetails("Details s1");
 		details.setStopId(213232L);
@@ -37,8 +38,8 @@ public class StopDAOTest extends BaseObjectTest {
 		return details;
 	}
 	
-	private StopDetails getStopDetails2() {
-		StopDetails details = new StopDetails();
+	private Stop getStopDetails2() {
+		Stop details = new Stop();
 		details.setDesc("Description of a stop2");
 		details.setDetails("Details s2");
 		details.setStopId(2L);
@@ -48,8 +49,8 @@ public class StopDAOTest extends BaseObjectTest {
 		return details;
 	}
 	
-	private StopDetails getStopDetails3() {
-		StopDetails details = new StopDetails();
+	private Stop getStopDetails3() {
+		Stop details = new Stop();
 		details.setDesc("Description of a stop3");
 		details.setDetails("Details s3");
 		details.setStopId(212L);
@@ -62,16 +63,16 @@ public class StopDAOTest extends BaseObjectTest {
 	@Test
 	public void testAddStopDetails() {
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
-		Assert.assertEquals(0, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
-		StopDetails details = getStopDetails();
+		Assert.assertEquals(0, ds.prepare(new Query(Stop.class.getSimpleName())).countEntities(withLimit(10)));
+		Stop details = getStopDetails();
 		stopDAO.addStopDetails(details);
-		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Stop.class.getSimpleName())).countEntities(withLimit(10)));
 		
-		Query q = new Query("StopDetails");
+		Query q = new Query(Stop.class.getSimpleName());
 		q.addFilter("id", Query.FilterOperator.EQUAL, details.getStopId());
 		
 		PreparedQuery pq = ds.prepare(q);
-		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Stop.class.getSimpleName())).countEntities(withLimit(10)));
 		
 		for (Entity result: pq.asIterable()) {
 			assertStopDetailsEntity(result, details, true);
@@ -81,7 +82,7 @@ public class StopDAOTest extends BaseObjectTest {
 		
 	}
 	
-	private void assertStopDetailsEntity(Entity result, StopDetails expected, boolean checkId) {
+	private void assertStopDetailsEntity(Entity result, Stop expected, boolean checkId) {
 		
 		Long id = (Long) result.getProperty("id");
 		  String name = (String) result.getProperty("name");
@@ -103,21 +104,21 @@ public class StopDAOTest extends BaseObjectTest {
 	public void testUpdateStopDetails() {
 		
 		
-		StopDetails details = getStopDetails();
+		Stop details = getStopDetails();
 		stopDAO.addStopDetails(details);
 		
-		StopDetails details2 = details.clone();
+		Stop details2 = details.clone();
 		details2.setStopId(null);
 		details2.setName(details.getName() + "Test");
 		details2.setDesc(details.getDesc() + "dsdada");
 		details2.setLongitude(details.getLongitude() + "54");		
 		stopDAO.updateStopDetails(details.getStopId(), details2);
 		
-		Query q = new Query("StopDetails");
+		Query q = new Query(Stop.class.getSimpleName());
 		q.addFilter("id", Query.FilterOperator.EQUAL, details.getStopId());
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		PreparedQuery pq = ds.prepare(q);
-		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Stop.class.getSimpleName())).countEntities(withLimit(10)));
 		for (Entity result: pq.asIterable()) {
 			assertStopDetailsEntity(result, details, true);
 			assertStopDetailsEntity(result, details2, false);
@@ -128,10 +129,10 @@ public class StopDAOTest extends BaseObjectTest {
 
 	@Test
 	public void testGetStopDetails() {
-		StopDetails details = getStopDetails();
+		Stop details = getStopDetails();
 		stopDAO.addStopDetails(details);
 		
-		StopDetails actualDetail = stopDAO.getStopDetails(details.getStopId());
+		Stop actualDetail = stopDAO.getStopDetails(details.getStopId());
 		Assert.assertEquals(details, actualDetail);
 	}
 	
@@ -142,10 +143,10 @@ public class StopDAOTest extends BaseObjectTest {
 		stopDAO.addStopDetails(getStopDetails2());
 		stopDAO.addStopDetails(getStopDetails3());		
 		
-		Collection<StopDetails> actualDetailCollection = stopDAO.getStopDetailsList();
+		Collection<Stop> actualDetailCollection = stopDAO.getStopDetailsList();
 		Assert.assertEquals(3, actualDetailCollection.size());
 		
-		List<StopDetails> expectedList = new ArrayList<StopDetails>();
+		List<Stop> expectedList = new ArrayList<Stop>();
 		expectedList.add(getStopDetails());
 		expectedList.add(getStopDetails2());
 		expectedList.add(getStopDetails3());		
@@ -154,7 +155,7 @@ public class StopDAOTest extends BaseObjectTest {
 	}
 	
 	public void testDeleteStopDetails() {
-		StopDetails stopDetail = stopDAO.addStopDetails(getStopDetails());
+		Stop stopDetail = stopDAO.addStopDetails(getStopDetails());
 		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();
 		Assert.assertEquals(1, ds.prepare(new Query("StopDetails")).countEntities(withLimit(10)));
 		
@@ -170,7 +171,8 @@ public class StopDAOTest extends BaseObjectTest {
 		tank.setDescription("Tank Desc 1");
 		tank.setName("Tank Name A");
 		tank.setHeight(90.0);
-		tank.setHeight(77.0);
+		tank.setRadius(77.0);
+		tank.setStorageStock(StorageStockType.OIL.ordinal());
 		return tank;
 	}
 	
@@ -180,6 +182,7 @@ public class StopDAOTest extends BaseObjectTest {
 		tank.setName("Tank Name B");
 		tank.setHeight(34.0);
 		tank.setRadius(66.0);
+		tank.setStorageStock(StorageStockType.OIL.ordinal());
 		return tank;
 	}
 	
@@ -206,7 +209,7 @@ public class StopDAOTest extends BaseObjectTest {
 	
 	@Test
 	public void testAddEquipment() {
-		StopDetails stop = stopDAO.addStopDetails(getStopDetails());
+		Stop stop = stopDAO.addStopDetails(getStopDetails());
 		getStopDAO().addEquipment(stop.getStopId(), getEquipmentTank1StopA());
 		getStopDAO().addEquipment(stop.getStopId(), getEquipmentTank2StopA());
 		getStopDAO().addEquipment(stop.getStopId(), getEquipmentGasmeterStopA());
@@ -216,14 +219,11 @@ public class StopDAOTest extends BaseObjectTest {
 		Assert.assertEquals(2, ds.prepare(new Query(Tank.class.getSimpleName())).countEntities(withLimit(10)));
 		Assert.assertEquals(1, ds.prepare(new Query(Gasmeter.class.getSimpleName())).countEntities(withLimit(10)));
 		Assert.assertEquals(1, ds.prepare(new Query(Wellhead.class.getSimpleName())).countEntities(withLimit(10)));
-		
-		StopDetails stopDetails = getStopDAO().getStopDetails(stop.getStopId());
-		Assert.assertEquals(stopDetails.getEquipments().size(), 4);
 	}
 	
 	@Test
 	public void testGetEquipments() {
-		StopDetails stop = stopDAO.addStopDetails(getStopDetails());
+		Stop stop = stopDAO.addStopDetails(getStopDetails());
 		Collection<Equipment> equipments = new ArrayList<Equipment>();
 		equipments.add(getEquipmentTank1StopA());
 		equipments.add(getEquipmentTank2StopA());
@@ -239,15 +239,36 @@ public class StopDAOTest extends BaseObjectTest {
 		Assert.assertEquals(1, ds.prepare(new Query(Gasmeter.class.getSimpleName())).countEntities(withLimit(10)));
 		Assert.assertEquals(1, ds.prepare(new Query(Wellhead.class.getSimpleName())).countEntities(withLimit(10)));
 		
-		StopDetails stopDetails = getStopDAO().getStopDetails(stop.getStopId());
-		Assert.assertEquals(stopDetails.getEquipments().size(), 4);
+		Stop stopDetails = getStopDAO().getStopDetails(stop.getStopId());
+		
 		Collection<Equipment> actualEquipments = getStopDAO().getEquipments(stopDetails.getStopId());
+		Assert.assertEquals(actualEquipments.size(), 4);
+		
 		equipments.removeAll(actualEquipments);
 		Assert.assertEquals(0, equipments.size());
 	}
 	@Test
-	public void testDeleteEquipment() {
-		//throw new UnsupportedOperationException();
+	public void testDeleteEquipments() {
+		Stop stop = stopDAO.addStopDetails(getStopDetails());
+		Collection<Equipment> equipments = new ArrayList<Equipment>();
+		equipments.add(getEquipmentTank1StopA());
+		equipments.add(getEquipmentTank2StopA());
+		equipments.add(getEquipmentGasmeterStopA());
+		equipments.add(getEquipmentWellheadStopA());
+		
+		for (Equipment eqmt : equipments) {
+			getStopDAO().addEquipment(stop.getStopId(), eqmt);
+		}
+		
+		DatastoreService ds = DatastoreServiceFactory.getDatastoreService();	
+		Assert.assertEquals(2, ds.prepare(new Query(Tank.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Gasmeter.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(1, ds.prepare(new Query(Wellhead.class.getSimpleName())).countEntities(withLimit(10)));
+		
+		stopDAO.deleteEquipments(stop.getStopId());
+		Assert.assertEquals(0, ds.prepare(new Query(Tank.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(0, ds.prepare(new Query(Gasmeter.class.getSimpleName())).countEntities(withLimit(10)));
+		Assert.assertEquals(0, ds.prepare(new Query(Wellhead.class.getSimpleName())).countEntities(withLimit(10)));
 		
 	}
 	

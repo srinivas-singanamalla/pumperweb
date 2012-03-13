@@ -75,7 +75,7 @@ public class Wellhead extends Equipment {
 			Wellhead gm = (Wellhead)obj;
 			return gm.casingPressure.equals(this.casingPressure) &&
 				   gm.downTime.equals(this.downTime) &&
-				   gm.producingMethod.equals(this.downTime) &&
+				   gm.producingMethod.equals(this.producingMethod) &&
 				   gm.tubingPressure.equals(this.tubingPressure) &&
 				   gm.comments.equals(this.comments) &&
 				   super.equals(obj);

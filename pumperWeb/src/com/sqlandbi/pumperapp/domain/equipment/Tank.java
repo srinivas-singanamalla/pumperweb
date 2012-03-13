@@ -15,6 +15,14 @@ public class Tank extends Equipment {
 	@Persistent
 	private Integer storageStock;
 	
+	public Integer getStorageStock() {
+		return storageStock;
+	}
+
+	public void setStorageStock(Integer storageStock) {
+		this.storageStock = storageStock;
+	}
+
 	public enum StorageStockType {
 		OIL,
 		WATER,
