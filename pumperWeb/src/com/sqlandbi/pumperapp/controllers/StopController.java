@@ -43,6 +43,13 @@ public class StopController {
             return "pumperapp/pumperWeb";
     }
 	
+	
+	@RequestMapping("/pumperapp/start")
+    public String start(Model model) {
+            //model.addAttribute("name", name);
+            return "pumperapp/pumperStart";
+    }
+	
 	/*
 	@RequestMapping(value="/availability", method=RequestMethod.GET)
 	public @ResponseBody AvailabilityStatus getAvailability(@RequestParam String name) {

@@ -39,6 +39,7 @@
 	 						<li><a href="test">Tank 1</a></li>
 	 						<li><a href="test">Tank 2</a></li>
 	 						<li><a href="test">Wellhead 1</a></li>
+	 						<li><a href="test">Add an Equipment</a></li>
 	 					</ul>
 	 				</li>
 	 				<li><a href="test">Stop 2</a>
@@ -46,14 +47,17 @@
 	 						<li><a href="test">Tank 1</a></li>
 	 						<li><a href="test">Tank 2</a></li>
 	 						<li><a href="test">Wellhead 1</a></li>
+	 						<li><a href="test">Add an Equipment</a></li>
 	 					</ul>
 	 				</li>
 	 				<li><a href="test">Stop 3</a></li>
+	 				<li><a href="test">Add a Stop</a></li>
 	 			</ul>
 	 			
 	 		</li>
 	 		<li><a href="test">Route 2</a></li>
 	 		<li><a href="test">Route 3</a></li>
+	 		<li><a href="test">Add a Route</a></li>
 	 	</ul>
 	 </div>
  </div>
